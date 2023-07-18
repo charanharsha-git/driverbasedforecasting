@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forecast</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+
+    #chart-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .chart {
+      width: 400px;
+      height: 300px;
+      margin: 15px;
+    }
+
+    #forecast-table {
+      margin-top: 30px;
+    }
+
+    #forecast-table th,
+    #forecast-table td {
+      padding: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Forecast</h2>
+    <div id="chart-container">
+      <!-- Add the forecasted charts here -->
+      <div class="chart">Chart 1</div>
+      <div class="chart">Chart 2</div>
+      <div class="chart">Chart 3</div>
+    </div>
+
+    <table id="forecast-table" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product Family</th>
+          <th>Chart</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Add the forecast table rows here -->
+        <tr>
+          <td>Product Family 1</td>
+          <td>Chart 1</td>
+        </tr>
+        <tr>
+          <td>Product Family 2</td>
+          <td>Chart 2</td>
+        </tr>
+        <tr>
+          <td>Product Family 3</td>
+          <td>Chart 3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

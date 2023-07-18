@@ -1,0 +1,179 @@
+<!-- templates/result.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Forecast Result</title>
+<!--    &lt;!&ndash; Include D3.js library &ndash;&gt;-->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<div class="container">
+<!--<body background="static/image.jpeg">-->
+<body>
+    <h1>Forecast Result</h1>
+    <div class="row">
+        <div class="col-md-6">
+        <h3>Select a column:</h3>
+            <select id="column-select-input" onchange="drawPlot(this.value)">
+                {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div id="plot">
+
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+    // Retrieve the dataframes and columns passed from Flask
+    const dataframe1 = JSON.parse('{{ dataframe1.to_json(orient="records")|safe }}');
+    const dataframe2 = JSON.parse('{{ dataframe2.to_json(orient="records")|safe }}');
+    const dataframe3 = JSON.parse('{{ dataframe3.to_json(orient="records")|safe }}');
+    const columns = {{ columns|tojson|safe }};
+    const pr_list = {{ pr_list|tojson|safe }};
+
+
+
+    // D3.js code to create the initial plot using the first column
+    drawPlot(columns[0]);
+
+    // Function to draw the plot based on the selected column
+    function drawPlot(selectedColumn) {
+        // Extract the selected column data for plotting
+        const data1 = dataframe1.map((row, index) => ({ value: row[selectedColumn], index }));
+        const data2 = dataframe2.map((row, index) => ({ value: row[selectedColumn],index}));
+        const data3 = dataframe3.map((row, index) => ({ value: row[selectedColumn], index}));
+
+        // Remove the existing plot
+        d3.select("#plot svg").remove();
+        d3.select("#legend").remove();
+
+        // Set up the dimensions and margins for the plot
+        const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        const width = 600 - margin.left - margin.right;
+        const height = 400 - margin.top - margin.bottom;
+
+        // Create the SVG element
+        const svg = d3.select("#plot")
+            .append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // Set up the x-axis scale
+        const x = d3.scaleLinear()
+            .domain(d3.extent([...data1, ...data2, ...data3], d => d.index))
+            .range([0, width]);
+
+        // Set up the y-axis scale
+        const y = d3.scaleLinear()
+            .domain(d3.extent([...data1, ...data2, ...data3], d => d.value))
+            .range([height, 0]);
+
+        // Create the x-axis
+        const xAxis = d3.axisBottom(x);
+
+        // Create the y-axis
+        const yAxis = d3.axisLeft(y);
+
+        // Append the x-axis to the plot
+        svg.append("g")
+            .attr("transform", `translate(0, ${height})`)
+            .call(xAxis);
+
+        // Append the y-axis to the plot
+        svg.append("g")
+            .call(yAxis);
+
+        // Create the line generator
+        const line = d3.line()
+            .x(d => x(d.index))
+            .y(d => y(d.value));
+
+        // Append the path representing the line for dataframe1
+        svg.append("path")
+            .datum(data1)
+            .attr("fill", "none")
+            .attr("stroke", "black")
+            .attr("stroke-width", 1.5)
+            .attr("d", line);
+
+        // Append the path representing the line for dataframe2
+        svg.append("path")
+            .datum(data2)
+            .attr("fill", "none")
+            .attr("stroke", "blue")
+            .attr("stroke-width", 1.5)
+            .attr("d", line);
+
+        // Append the path representing the line for dataframe3
+        svg.append("path")
+            .datum(data3)
+            .attr("fill", "none")
+            .attr("stroke", "green")
+            .attr("stroke-width", 1.5)
+            .attr("d", line);
+        // Create the legend
+        const legend = d3.select("#plot")
+            .append("div")
+            .attr("id", "legend");
+
+        // Append the legend items
+        const legendItems = [
+            { color: "black", label:"Promotion "+ pr_list[0]},
+            { color: "blue", label:"Promotion "+ pr_list[1]},
+            { color: "green", label:"Promotion "+ pr_list[2] }
+        ];
+
+        legendItems.forEach(item => {
+            const legendItem = legend.append("div")
+                .style("display", "flex")
+                .style("align-items", "center")
+                .style("margin-right", "10px");
+
+            legendItem.append("div")
+                .style("width", "10px")
+                .style("height", "10px")
+                .style("background-color", item.color)
+                .style("margin-right", "5px");
+
+            legendItem.append("span")
+                .text(item.label);
+        });
+    }
+
+</script>
+
+</body>
+</div>
+<style>
+
+
+</style>
+
+</html>
+
+
+<!--
+<html>
+<div class="container">
+  <img src="static/image.jpeg" alt="Background" width="500" height="600">
+  <div class="row">
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+    <div class="col-sm">
+      One of three columns
+    </div>
+  </div>
+</div>
+</html>-->

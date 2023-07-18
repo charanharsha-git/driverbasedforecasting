@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Forecast Results</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <h2>Forecast Results</h2>
+  <p>Store No: {{ store_no }}</p>
+  <p>Days to Forecast: {{ forecast_days }}</p>
+  <p>Promotion 1: {{ promotion1 }}</p>
+  <p>Promotion 2: {{ promotion2 }}</p>
+  <p>Promotion 3: {{ promotion3 }}</p>
+
+  <div id="chart1"></div>
+  <div id="chart2"></div>
+  <div id="chart3"></div>
+
+  <script>
+    // JavaScript code to generate the charts
+    var promotion1 = {{ promotion1 }};
+    var promotion2 = {{ promotion2 }};
+    var promotion3 = {{ promotion3 }};
+    var forecastDays = {{ forecast_days }};
+
+    // Generate data for chart 1
+    var chart1Data = generateChartData(promotion1);
+    plotChart('chart1', chart1Data, 'Chart 1');
+
+    // Generate data for chart 2
+    var chart2Data = generateChartData(promotion2);
+    plotChart('chart2', chart2Data, 'Chart 2');
+
+    // Generate data for chart 3
+    var chart3Data = generateChartData(promotion3);
+    plotChart('chart3', chart3Data, 'Chart 3');
+
+    // Function to generate chart data
+    function generateChartData(promotionValue) {
+      var data = [];
+
+      for (var i = 0; i < forecastDays; i++) {
+        data.push(Math.random() * promotionValue);
+      }
+
+      return data;
+    }
+
+    // Function to plot the chart
+    function plotChart(chartId, chartData, chartTitle) {
+      var chartDiv = document.getElementById(chartId);
+
+      var trace = {
+        x: Array.from({ length: forecastDays }, (_, i) => i + 1),
+        y: chartData,
+        type: 'scatter',
+        mode: 'lines',
+        name: 'Forecast',
+      };
+
+      var layout = {
+        title: chartTitle,
+        xaxis: { title: 'Day' },
+        yaxis: { title: 'Sales' },
+      };
+
+      var config = {
+        responsive: true,
+      };
+
+      Plotly.newPlot(chartDiv, [trace], layout, config);
+    }
+  </script>
+</body>
+</html>
