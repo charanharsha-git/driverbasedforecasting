@@ -37,7 +37,7 @@ with open('pickle_files/list_of_final_df.pkl', 'rb') as file:
 with open('pickle_files/list_of_scaler.pkl', 'rb') as file:
   list_of_scaler = pickle.load(file)
 
-def prediction_fn(store_nbr,n_steps,promotion_weightage):
+def prediction_fn(store_nbr,n_steps,promotion_weightage,promotion_strategy):
   scaler=list_of_scaler[store_nbr-1]
   train_data=list_of_train[store_nbr-1]
   test_data=list_of_test[store_nbr-1]
@@ -57,7 +57,11 @@ def prediction_fn(store_nbr,n_steps,promotion_weightage):
   sequence_length=10
   X_train, y_train=create_sequences(train_data_scaled, sequence_length)
   X_test, y_test = create_sequences(test_data_scaled, sequence_length)
-  remaining_data = final_df.iloc[train_size:, :]*promotion_weightage
+  global remaining_data
+  if promotion_strategy=='Increase':
+      remaining_data = final_df.iloc[train_size:, :]*(1+promotion_weightage/100)
+  elif promotion_strategy=='Decrease':
+      remaining_data = final_df.iloc[train_size:, :] * (1 - promotion_weightage / 100)
   remaining_data_scaled = scaler.transform(remaining_data)
   X_future, y_future = create_sequences(remaining_data_scaled, sequence_length)
   model=model_load(store_nbr)
@@ -124,21 +128,25 @@ def forecast():
     if request.method == 'POST':
         store_no = int(request.form['storeNo'])
         forecast_days = int(request.form['forecastDays'])
-        promotion1 = float(request.form['promotion1'])
-        promotion2 = float(request.form['promotion2'])
-        promotion3 = float(request.form['promotion3'])
+        promotion1 = int(request.form['promotion1'])
+        promotion2 = int(request.form['promotion2'])
+        promotion3 = int(request.form['promotion3'])
+        prom1_stg=request.form.get('rdbt1')
+        prom2_stg=request.form.get('rdbt2')
+        prom3_stg=request.form.get('rdbt3')
+
         # product_name = request.form.getlist('productFamily')
-        train, actuals, prediction1 = prediction_fn(store_no, forecast_days, promotion1)
-        train, actuals, prediction2 = prediction_fn(store_no, forecast_days, promotion2)
-        train, actuals, prediction3 = prediction_fn(store_no, forecast_days, promotion3)
+        train, actuals, prediction1 = prediction_fn(store_no, forecast_days, promotion1,prom1_stg)
+        train, actuals, prediction2 = prediction_fn(store_no, forecast_days, promotion2,prom2_stg)
+        train, actuals, prediction3 = prediction_fn(store_no, forecast_days, promotion3,prom3_stg)
         pred_cols = prediction1.columns.tolist()
         #print(prediction1.index)
         print(train.columns)
 
         # Pass the dataframe to the template for rendering
-        return render_template('plot.html', dataframe1=prediction1,dataframe2=prediction2, dataframe3=prediction3,columns=pred_cols,idx=prediction1.index.tolist(),pr_list=[promotion1,promotion2,promotion3])
+        return render_template('plot.html', dataframe1=prediction1,dataframe2=prediction2, dataframe3=prediction3,columns=pred_cols,idx=prediction1.index.tolist(),pr_list=[promotion1,promotion2,promotion3],pr_stg_list=[prom1_stg,prom2_stg,prom3_stg])
 
         # Render the initial form
-    return render_template('index1.html')
+    return render_template('index2.html')
 if __name__ == '__main__':
     app.run(debug=True)
