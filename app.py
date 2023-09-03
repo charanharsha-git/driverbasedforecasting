@@ -144,7 +144,7 @@ def forecast():
         print(train.columns)
 
         # Pass the dataframe to the template for rendering
-        return render_template('plot.html', dataframe1=prediction1,dataframe2=prediction2, dataframe3=prediction3,columns=pred_cols,idx=prediction1.index.tolist(),pr_list=[promotion1,promotion2,promotion3],pr_stg_list=[prom1_stg,prom2_stg,prom3_stg])
+        return render_template('plot.html', dataframe1=prediction1,dataframe2=prediction2, dataframe3=prediction3,columns=pred_cols,idx=prediction1.index.tolist(),pr_list=[promotion1,promotion2,promotion3],pr_stg_list=[prom1_stg,prom2_stg,prom3_stg],store_no=store_no)
 
         # Render the initial form
     return render_template('index2.html')
