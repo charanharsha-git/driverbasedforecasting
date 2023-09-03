@@ -126,10 +126,10 @@ label[for="contactChoice6"] {
         {% endfor %}
       </select><br><br>
       <label for="param2">No. of Days to Forecast: <span id="forecastDaysOutput">10</span> Days</label>
-      <input type="range" id="param2" name="forecastDays" min="10" max="75" oninput="updateForecastDays(value,'forecastDaysOutput')"  required><br><br>
+      <input type="range" id="param2" name="forecastDays" min="10" max="75" value="10" oninput="updateForecastDays(value,'forecastDaysOutput')"  required><br><br>
       <div class="container1">
-      <label for="param3">Promotion Strategy I: <span id="promotion1output">10</span> %</label>
-      <input type="range" id="param3" name="promotion1" min="0" max="100" oninput="updateForecastDays(value,'promotion1output')"  required><br><br>
+      <label for="param3">Promotion Strategy I: <span id="promotion1output">0</span> %</label>
+      <input type="range" id="param3" name="promotion1" min="0" max="100" value="0" oninput="updateForecastDays(value,'promotion1output')"  required><br><br>
         <div class="radio-buttons" >
         <input type="radio" id="contactChoice1" name="rdbt1" value="Increase" required/>
       <label for="contactChoice1">Increase</label>
@@ -140,8 +140,8 @@ label[for="contactChoice6"] {
       </div>
       <div class="container1">
 
-      <label for="param4">Promotion Strategy II: <span id="promotion2output">10</span> %</label>
-      <input type="range" id="param4" name="promotion2" min="0" max="100" oninput="updateForecastDays(value,'promotion2output')"  required><br><br>
+      <label for="param4">Promotion Strategy II: <span id="promotion2output">0</span> %</label>
+      <input type="range" id="param4" name="promotion2" min="0" max="100" value="0" oninput="updateForecastDays(value,'promotion2output')"  required><br><br>
       <div class="radio-buttons">
         <input type="radio" id="contactChoice3" name="rdbt2" value="Increase" required/>
       <label for="contactChoice1">Increase</label>
@@ -151,8 +151,8 @@ label[for="contactChoice6"] {
           </div>
       </div>
       <div class="container1">
-        <label for="param5">Promotion Strategy III: <span id="promotion3output">10</span> %</label>
-      <input type="range" id="param5" name="promotion3" min="0" max="100" oninput="updateForecastDays(value,'promotion3output')"  required><br><br>
+        <label for="param5">Promotion Strategy III: <span id="promotion3output">0</span> %</label>
+      <input type="range" id="param5" name="promotion3" min="0" max="100" value="0" oninput="updateForecastDays(value,'promotion3output')"  required><br><br>
       <div class="radio-buttons">
         <input type="radio" id="contactChoice5" name="rdbt3" value="Increase" required/>
       <label for="contactChoice1">Increase</label>
