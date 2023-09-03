@@ -100,6 +100,16 @@ label[for="contactChoice4"],
 label[for="contactChoice6"] {
   color: red;
 }
+    .image-container img {
+      margin-right: 20px; }
+  .main-container {
+      display: flex;
+      align-items: center;
+    justify-content: center;
+    background-color: #082340;
+      height: 100vh;
+      overflow: hidden;}
+
 
 
 
@@ -111,10 +121,17 @@ label[for="contactChoice6"] {
   </script>
 </head>
 <body style="background-color:#082340;">
+
   <div class="logo">
     <img src="static/logo.jpg" alt="Logo" width="256" height="80">
-      <h1>Driver Based Forecasting</h1>
+
   </div>
+  <h1>Driver Based Forecasting</h1>
+
+
+  <div class="main-container">
+
+
   <div class="container">
 
     <form method="POST" action="/">
@@ -141,7 +158,7 @@ label[for="contactChoice6"] {
       <div class="container1">
 
       <label for="param4">Promotion Strategy II: <span id="promotion2output">0</span> %</label>
-      <input type="range" id="param4" name="promotion2" min="0" max="100" value="0" oninput="updateForecastDays(value,'promotion2output')"  required><br><br>
+      <input type="range" id="param4" name="promotion2" min="0" max="100" value="0"  oninput="updateForecastDays(value,'promotion2output')"  required><br><br>
       <div class="radio-buttons">
         <input type="radio" id="contactChoice3" name="rdbt2" value="Increase" required/>
       <label for="contactChoice1">Increase</label>
@@ -152,7 +169,7 @@ label[for="contactChoice6"] {
       </div>
       <div class="container1">
         <label for="param5">Promotion Strategy III: <span id="promotion3output">0</span> %</label>
-      <input type="range" id="param5" name="promotion3" min="0" max="100" value="0" oninput="updateForecastDays(value,'promotion3output')"  required><br><br>
+      <input type="range" id="param5" name="promotion3" min="0" max="100" value="0"  oninput="updateForecastDays(value,'promotion3output')"  required><br><br>
       <div class="radio-buttons">
         <input type="radio" id="contactChoice5" name="rdbt3" value="Increase" required/>
       <label for="contactChoice1">Increase</label>
@@ -164,6 +181,7 @@ label[for="contactChoice6"] {
         <input type="submit" value="Generate Forecast">
 
     </form>
+  </div>
   </div>
 </body>
 </html>
