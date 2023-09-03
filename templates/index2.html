@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Driver Based Forecasting</title>
+  <style>
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #FFFFFF;
+    }
+
+    form {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    select,
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    .container1 {
+  display: flex;
+  justify-content:  space-between;
+  margin-right: 20px;
+  margin-top: 30px;
+}
+
+.radio-buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.radio-buttons input[type="radio"] {
+  margin-right: 10px;
+}
+
+label[for="contactChoice1"],
+label[for="contactChoice3"],
+label[for="contactChoice5"] {
+  color: green;
+}
+
+    label[for="contactChoice2"],
+label[for="contactChoice4"],
+label[for="contactChoice6"] {
+  color: red;
+}
+
+
+
+  </style>
+  <script>
+    function updateForecastDays(value,id) {
+      document.getElementById(id).innerText = value;
+    }
+  </script>
+</head>
+<body style="background-color:#082340;">
+  <div class="logo">
+    <img src="static/logo.jpg" alt="Logo" width="256" height="80">
+      <h1>Driver Based Forecasting</h1>
+  </div>
+  <div class="container">
+
+    <form method="POST" action="/">
+      <label for="param1">Store Number:</label>
+      <select id="param1" name="storeNo" required>
+        <option value="">Select Store Number</option>
+        {% for store in range(1, 55) %}
+          <option value="{{ store }}">{{ store }}</option>
+        {% endfor %}
+      </select><br><br>
+      <label for="param2">No. of Days to Forecast: <span id="forecastDaysOutput">10</span> Days</label>
+      <input type="range" id="param2" name="forecastDays" min="10" max="75" oninput="updateForecastDays(value,'forecastDaysOutput')"  required><br><br>
+      <div class="container1">
+      <label for="param3">Promotion Strategy I: <span id="promotion1output">10</span> %</label>
+      <input type="range" id="param3" name="promotion1" min="0" max="100" oninput="updateForecastDays(value,'promotion1output')"  required><br><br>
+        <div class="radio-buttons" >
+        <input type="radio" id="contactChoice1" name="rdbt1" value="Increase" required/>
+      <label for="contactChoice1">Increase</label>
+
+      <input type="radio" id="contactChoice2" name="rdbt1" value="Decrease" />
+      <label for="contactChoice2">Decrease</label>
+          </div>
+      </div>
+      <div class="container1">
+
+      <label for="param4">Promotion Strategy II: <span id="promotion2output">10</span> %</label>
+      <input type="range" id="param4" name="promotion2" min="0" max="100" oninput="updateForecastDays(value,'promotion2output')"  required><br><br>
+      <div class="radio-buttons">
+        <input type="radio" id="contactChoice3" name="rdbt2" value="Increase" required/>
+      <label for="contactChoice1">Increase</label>
+
+      <input type="radio" id="contactChoice4" name="rdbt2" value="Decrease" />
+      <label for="contactChoice2">Decrease</label>
+          </div>
+      </div>
+      <div class="container1">
+        <label for="param5">Promotion Strategy III: <span id="promotion3output">10</span> %</label>
+      <input type="range" id="param5" name="promotion3" min="0" max="100" oninput="updateForecastDays(value,'promotion3output')"  required><br><br>
+      <div class="radio-buttons">
+        <input type="radio" id="contactChoice5" name="rdbt3" value="Increase" required/>
+      <label for="contactChoice1">Increase</label>
+
+      <input type="radio" id="contactChoice6" name="rdbt3" value="Decrease" />
+      <label for="contactChoice2">Decrease</label>
+          </div>
+      </div>
+        <input type="submit" value="Generate Forecast">
+
+    </form>
+  </div>
+</body>
+</html>
